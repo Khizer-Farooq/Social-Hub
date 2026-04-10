@@ -7,7 +7,6 @@ function CommentSection({ postId, comments, setComments, user }) {
 
   const currentComments = comments[postId] || [];
 
-  // ✅ 1. LOAD COMMENTS FROM LOCALSTORAGE
   useEffect(() => {
     const storedComments =
       JSON.parse(localStorage.getItem("comments")) || {};
@@ -20,7 +19,6 @@ function CommentSection({ postId, comments, setComments, user }) {
     }
   }, [postId, setComments]);
 
-  // ✅ 2. ADD COMMENT
   const addComment = (event) => {
     event.preventDefault();
 
@@ -34,7 +32,7 @@ function CommentSection({ postId, comments, setComments, user }) {
       id: Date.now(),
       body: trimmedText,
       email: user.email,
-      username: user.name, // ✅ for display
+      username: user.name, 
       postId,
       createdAt: new Date().toISOString()
     };
@@ -44,17 +42,14 @@ function CommentSection({ postId, comments, setComments, user }) {
       [postId]: [newComment, ...(comments[postId] || [])]
     };
 
-    // ✅ Update state
     setComments(updatedComments);
 
-    // ✅ Save to localStorage
     localStorage.setItem("comments", JSON.stringify(updatedComments));
 
     setText("");
     setError("");
   };
 
-  // ✅ 3. DELETE COMMENT
   const deleteComment = (id) => {
     const updatedComments = {
       ...comments,
@@ -63,10 +58,8 @@ function CommentSection({ postId, comments, setComments, user }) {
       )
     };
 
-    // ✅ Update state
     setComments(updatedComments);
 
-    // ✅ Update localStorage
     localStorage.setItem("comments", JSON.stringify(updatedComments));
   };
 
